@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Marching Step Size Calculator</title>
+		<style>
+			* {
+				font-family: "Helvetica Neue", "Ariel", sans-serif;
+			}
+
+			button {
+				background-color: #FFF;
+				color: #000;
+				border: 1px solid black;
+				font-size: 24px;
+				font-weight: bold;
+			}
+
+			button:hover {
+				background-color: #DDD;
+				color: #000;
+			}
+
+			button:active {
+				background-color: #000;
+				color: #FFF;
+			}
+
+			#return {
+				font-size: 32px;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Marching Step Size Calculator</h1>
+		Distance of 8-to-5 steps horizontally: <input type="text" id="distance_x"><br>
+		Distance of 8-to-5 steps vertically: <input type="text" id="distance_y"><br>
+		Number of steps: <input type="text" id="counts"><br><p></p>
+
+		<button onclick="main()">Submit</button>
+
+
+		<div id="return"></div>
+
+		<script>
+			function main() {
+				var distance_x = document.getElementById("distance_x").value;
+				var distance_y = document.getElementById("distance_y").value;
+				var counts = document.getElementById("counts").value;
+
+				if (distance_x == "" | distance_y == "" | counts == "" | counts <= 0) {
+					document.getElementById("return").innerHTML = "Invalid input";
+					return;
+				}
+
+				var distance = Math.pow(Math.pow(distance_x, 2) + Math.pow(distance_y, 2), 0.5);
+				var dist_inches = distance * 22.5;
+				var dist_unit = dist_inches / counts;
+				var step_size = (180 / dist_unit).toFixed(3);
+
+				document.getElementById("return").innerHTML = step_size + "-to-5 step size";
+			}
+		</script>
+	</body>
+</html>
