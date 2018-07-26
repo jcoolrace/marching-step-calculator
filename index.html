@@ -2,9 +2,30 @@
 <html>
 	<head>
 		<title>Marching Step Size Calculator</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<style>
 			* {
 				font-family: "Helvetica Neue", "Ariel", sans-serif;
+			}
+
+			body {
+				background-color: #9BCBF7;  /* light blue */
+			}
+
+			input {
+				background-color: #6C8EAC;  /* dark blue */
+				border: 1px solid black;
+				color: #000;
+				transition: 0.25s;
+			}
+
+			input:focus {
+				background-color: #2B3844;  /* darker blue */
+				color: #FFF;
+			}
+
+			.input, input {
+				font-size: 20px;
 			}
 
 			button {
@@ -13,14 +34,10 @@
 				border: 1px solid black;
 				font-size: 24px;
 				font-weight: bold;
+				transition: 0.25s;
 			}
 
-			button:hover {
-				background-color: #DDD;
-				color: #000;
-			}
-
-			button:active {
+			button:hover, button:focus, button:active {
 				background-color: #000;
 				color: #FFF;
 			}
@@ -28,36 +45,79 @@
 			#return {
 				font-size: 32px;
 				font-weight: bold;
+				padding-top: 10px;
+			}
+
+			/* Mobile device: */
+			@media screen and (max-width: 700px) {
+				h1 {
+					text-align: center;
+				}
+
+				.input, input {
+					width: 100%
+				}
+
+				.input {
+					padding-bottom: 20px;
+				}
+
+				button {
+					margin: auto;
+					display: block;
+				}
+
+				#return {
+					text-align: center;
+				}
+			}
+
+			/* Desktop device: */
+			@media screen and (min-width: 701px) {
+				.input {
+					padding-bottom: 10px;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<h1>Marching Step Size Calculator</h1>
-		Distance of 8-to-5 steps horizontally: <input type="text" id="distance_x"><br>
-		Distance of 8-to-5 steps vertically: <input type="text" id="distance_y"><br>
-		Number of steps: <input type="text" id="counts"><br><p></p>
+		<div class="input">
+			Distance of 8-to-5 steps horizontally: <input type="text" id="distance_x">
+		</div>
+		<div class="input">
+			Distance of 8-to-5 steps vertically: <input type="text" id="distance_y">
+		</div>
+		<div class="input">
+			Number of steps: <input type="text" id="counts">
+		</div>
 
-		<button onclick="main()">Submit</button>
-
+		<div class="button">
+			<button onclick="main()">Submit</button>
+		</div>
 
 		<div id="return"></div>
 
 		<script>
 			function main() {
+				// Grab all the input values
 				var distance_x = document.getElementById("distance_x").value;
 				var distance_y = document.getElementById("distance_y").value;
 				var counts = document.getElementById("counts").value;
 
+				// Check for empty inputs, if found return output
 				if (distance_x == "" | distance_y == "" | counts == "" | counts <= 0) {
 					document.getElementById("return").innerHTML = "Invalid input";
 					return;
 				}
 
+				// Pythag, and then some math
 				var distance = Math.pow(Math.pow(distance_x, 2) + Math.pow(distance_y, 2), 0.5);
 				var dist_inches = distance * 22.5;
 				var dist_unit = dist_inches / counts;
 				var step_size = (180 / dist_unit).toFixed(3);
 
+				// Return output
 				document.getElementById("return").innerHTML = step_size + "-to-5 step size";
 			}
 		</script>
